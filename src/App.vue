@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <ImageUploader msg="Welcome to Your Vue.js App"/>
+    <ImageUploader />
+    <ImageSlider />
   </div>
 </template>
 
 <script>
 import ImageUploader from './components/ImageUploader.vue'
+import ImageSlider from './components/ImageSlider'
 
 export default {
   name: 'App',
   components: {
-    ImageUploader
+    ImageUploader,
+    ImageSlider
   }
 }
 </script>
