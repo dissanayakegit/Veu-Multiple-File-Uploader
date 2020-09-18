@@ -9,12 +9,13 @@
 
                     <div class="navi-buttons m-demo-icon">
                         <div class="m-demo-icon__preview">
-                            <i class="fa fa-angle-left" @click="previousImage()"></i>
+                            <button type="button" class="btn btn-primary btn-xs" @click="previousImage()">Previous</button>
                         </div>
                         <div class="m-demo-icon__preview">
-                            <i class="fa fa-angle-right" @click="nextImage()"></i>
+                            <button type="button" class="btn btn-primary btn-xs" @click="nextImage()">Next</button>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="action-menu">
@@ -28,18 +29,16 @@
                             type="file"
                             @change="setFile($event)"
                         />
-                        <label class="custom-file-label selected overflow-hide">{{ $t('Browse') }}</label>
+                        <label class="custom-file-label selected overflow-hide">{{'Browse'}}</label>
                     </div>
 
                     <div class="col-lg-1 text-center">
                         {{currentImgId}}
                         <a
-                            class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--pill fd-delete-btn"
+                            class="btn btn-danger btn-xs"
                             :id="currentImgId"
                             @click="deleteFile(currentImgId)"
-                        >
-                            <i class="fas fa-trash"></i>
-                        </a>
+                        >Delete</a>
                     </div>
                 </div>
             </div>
