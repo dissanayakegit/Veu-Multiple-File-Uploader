@@ -77,24 +77,17 @@ export default {
   methods: {
     setFile(e) {
       let self = this;
-      let selectedFiles = e.target.files;
-
-      for (let i = 0; i < selectedFiles.length; i++) {
-        console.log(selectedFiles[i]);
-        this.images.push(selectedFiles[i]);
-      }
-
-      for (let i = 0; i < this.images.length; i++) {
+      
+      for (let i = 0; i < e.target.files.length; i++) {
         let reader = new FileReader();
-        reader.onload = () => {
+        reader.readAsDataURL(e.target.files[i]);
+        reader.onload = function () {
           self.imageUrls.push({
             id: self.img_id,
             file: reader.result,
           });
           self.img_id++;
         };
-
-        reader.readAsDataURL(this.images[i]);
       }
       console.log("imageUrls: ", self.imageUrls);
     },
