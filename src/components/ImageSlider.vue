@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       imageUrls: [],
+      images: [],
       img_id: 0,
       currentIndex: 0,
     };
@@ -76,22 +77,26 @@ export default {
   methods: {
     setFile(e) {
       let self = this;
-      let reader = new FileReader();
+      let selectedFiles = e.target.files;
 
-      if (e.target.files.length > 0) {
-        for (let i = 0; i < e.target.files.length; i++) {
-          alert();
-          reader.readAsDataURL(e.target.files[i]);
-          reader.onload = function () {
-            self.imageUrls.push({
-              id: self.img_id,
-              file: reader.result,
-            });
-            self.img_id++;
-          };
-        }
-        console.log("imageUrls: ", self.imageUrls);
+      for (let i = 0; i < selectedFiles.length; i++) {
+        console.log(selectedFiles[i]);
+        this.images.push(selectedFiles[i]);
       }
+
+      for (let i = 0; i < this.images.length; i++) {
+        let reader = new FileReader();
+        reader.onload = () => {
+          self.imageUrls.push({
+            id: self.img_id,
+            file: reader.result,
+          });
+          self.img_id++;
+        };
+
+        reader.readAsDataURL(this.images[i]);
+      }
+      console.log("imageUrls: ", self.imageUrls);
     },
     deleteFile(img_id) {
       let self = this;
