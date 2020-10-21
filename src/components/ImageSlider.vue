@@ -55,6 +55,30 @@ export default {
     };
   },
 
+  mounted(){
+    let savedImages = []; // array of file urls returend from backend
+    //backend method
+    /*filesysyem.php
+     'record_keeper' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/uploads/'.RECORD_KEEPER_UPLOAD_DIRECTORY)
+        ],
+
+    public function getImages()
+    {
+        $filesToReturn = [];
+        $files = File::files(storage_path() . "/app/public/uploads/record_keeper");
+        foreach ($files as $file) {
+            $fileName = basename($file);
+            $file = Storage::url('uploads/' .RECORD_KEEPER_UPLOAD_DIRECTORY . "/" . $fileName);
+            array_push($filesToReturn, url($file));
+        }
+        return $this->apiResponse(['files' => $filesToReturn], $this->response_status_code, 200);
+    }
+    */
+    //this.convertUploadedFilesToBase64();
+  },
+
   computed: {
     currentImg() {
       if (this.imageUrls.length > 0) {
@@ -91,6 +115,29 @@ export default {
       }
       console.log("imageUrls: ", self.imageUrls);
     },
+    async convertUploadedFilesToBase64(savedImages) {
+            console.log(savedImages);
+            alert()
+            let self = this;
+            for (let i = 0; i < savedImages.length; i++) {
+                fetch(savedImages[i])
+                    .then(res => res.blob())
+                    .then(blob => {
+                        let reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        reader.onloadend = function () {
+                            let base64String = reader.result;
+                            self.imageUrls.push({
+                                id: 'new_' + self.img_id,
+                                name: 'new',
+                                file: base64String,
+                            });
+                            console.log('Base64 String - ', base64String);
+                            console.log('Base64 String without Tags- ', base64String.substr(base64String.indexOf(', ') + 1));
+                        }
+                    });
+            }
+        },
     deleteFile(img_id) {
       let self = this;
 
